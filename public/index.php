@@ -4,13 +4,15 @@ try {
 	$pdo = new PDO('mysql:host=localhost;dbname=library;charset=utf8', 'library', 'library');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	$sql = "UPDATE authors SET lastname='Pérez' WHERE firstname='Miguel'";
+	$sql = "SELECT `firstname`, `lastname` FROM `authors`";
 
-	$affectedRows = $pdo->exec($sql);
+	$result = $pdo->query($sql);
 
-	$output = "Updated " . $affectedRows . " rows.";
+	while ($row = $result->fetch()) {
+		$authors[] = ['firstname' => $row['firstname'], 'lastname' => $row['lastname']];
+	}
 } catch (PDOException $e) {
-	$output = sprintf("Database error: %s in %s:%x",
+	$error = sprintf("Unable to connect to database server: %s in %s:%x",
 		$e->getMessage(),
 		$e->getFile(),
 		$e->getLine()
