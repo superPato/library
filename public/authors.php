@@ -13,13 +13,13 @@ try {
 	}
 
 	$title = 'Author list';
-	$output = '';
 
-	foreach ($authors as $author) {
-		$output .= '<p>';
-		$output .= $author['lastname'] . ', ' . $author['lastname'];
-		$output .= '</p>';
-	}
+	ob_start();
+	
+	include __DIR__ . '/../templates/authors.html.php';
+
+	$output = ob_get_clean();
+
 } catch (PDOException $e) {
 	$title = 'An error has ocurred';
 
