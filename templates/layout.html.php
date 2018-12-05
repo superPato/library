@@ -9,6 +9,7 @@
 			<ul>
 				<li><a href="index.php">Home</a></li>
 				<li><a href="authors.php">Authors</a></li>
+				<li><a href="addauthor.php">Add Author</a></li>
 			</ul>
 		</nav>
 		<main>
