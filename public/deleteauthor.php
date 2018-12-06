@@ -1,25 +1,20 @@
-<?php  
+<?php 
 
 try {
 	$pdo = new PDO('mysql:host=localhost;dbname=library;charset=utf8', 'library', 'library');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	$sql = "SELECT `id`, `firstname`, `lastname` FROM `authors`";
+	$sql = 'DELETE FROM `authors` WHERE `id` = :id';
 
-	$authors = $pdo->query($sql);
+	$stmt = $pdo->prepare($sql);
+	$stmt->bindValue(':id', $_POST['id']);
+	$stmt->execute();
 
-	$title = 'Author list';
-
-	ob_start();
-	
-	include __DIR__ . '/../templates/authors.html.php';
-
-	$output = ob_get_clean();
-
+	header('location: authors.php');
 } catch (PDOException $e) {
 	$title = 'An error has ocurred';
 
-	$output = sprintf("Unable to connect to database server: %s in %s:%x",
+	$output = sprintf('Error in database server: %s in %s:%s',
 		$e->getMessage(),
 		$e->getFile(),
 		$e->getLine()
