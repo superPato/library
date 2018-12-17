@@ -4,7 +4,10 @@ try {
 	$pdo = new PDO('mysql:host=localhost;dbname=library;charset=utf8', 'library', 'library');
 	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	$sql = 'SELECT `id`, `title` FROM `books`';
+	$sql = 'SELECT `books`.`id`, `title`, `name` 
+			FROM `books` INNER JOIN `publisher` 
+				ON `publisherid` = `publisher`.`id`';
+				
 	$books = $pdo->query($sql);
 
 	$title = 'List Books';
