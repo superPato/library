@@ -1,8 +1,7 @@
-<?php  
+<?php
 
 try {
-	$pdo = new PDO('mysql:host=localhost;dbname=library;charset=utf8', 'library', 'library');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	include __DIR__ . '/../includes/DatabaseConnection.php';
 
 	$sql = "SELECT `id`, `firstname`, `lastname` FROM `authors`";
 
@@ -11,7 +10,7 @@ try {
 	$title = 'Author list';
 
 	ob_start();
-	
+
 	include __DIR__ . '/../templates/authors.html.php';
 
 	$output = ob_get_clean();

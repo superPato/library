@@ -1,13 +1,12 @@
-<?php 
+<?php
 
 try {
-	$pdo = new PDO('mysql:host=localhost;dbname=library;charset=utf8', 'library', 'library');
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	include __DIR__ . '/../includes/DatabaseConnection.php';
 
-	$sql = 'SELECT `books`.`id`, `title`, `name` 
-			FROM `books` INNER JOIN `publisher` 
+	$sql = 'SELECT `books`.`id`, `title`, `name`
+			FROM `books` INNER JOIN `publisher`
 				ON `publisherid` = `publisher`.`id`';
-				
+
 	$books = $pdo->query($sql);
 
 	$title = 'List Books';
@@ -24,8 +23,7 @@ try {
 		$e->getMessage(),
 		$e->getFile(),
 		$e->getLine()
-	);	
+	);
 }
 
 include __DIR__ . '/../templates/layout.html.php';
-

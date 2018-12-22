@@ -2,12 +2,11 @@
 
 if (isset($_POST['title'])) {
 	try {
-		$pdo = new PDO('mysql:host=localhost;dbname=library;charset=utf8', 'library', 'library');
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		include __DIR__ . '/../includes/DatabaseConnection.php';
 
-		$sql = 'INSERT INTO `books` SET 
-					`title` = :title, 
-					`publishingdate` = CURDATE(), 
+		$sql = 'INSERT INTO `books` SET
+					`title` = :title,
+					`publishingdate` = CURDATE(),
 					`publisherid` = :publisherid';
 
 		$statement = $pdo->prepare($sql);
