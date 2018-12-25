@@ -1,3 +1,5 @@
+<p><?= $totalBooks ?> books has been submitted.</p>
+
 <?php foreach ($books as $book): ?>
 <p>
 	<?= htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8') ?>
@@ -6,5 +8,5 @@
 		<input type="hidden" name="id" value="<?= $book['id'] ?>">
 		<button type="submit">Delete</button>
 	</form>
-</p>	
+</p>
 <?php endforeach ?>
