@@ -4,6 +4,10 @@
 		<input type="text" name="title" id="title">
 	</div>
 	<div>
+		<label for="publishingdate">Publishing Date</label>
+		<input type="date" name="publishingdate" id="publishingdate">
+	</div>
+	<div>
 		<label for="publisher">Publisher</label>
 		<select name="publisherid" id="publisher">
 		<?php foreach ($publishers as $publisher): ?>

@@ -3,18 +3,9 @@
 if (isset($_POST['title'])) {
 	try {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
+		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		$sql = 'INSERT INTO `books` SET
-					`title` = :title,
-					`publishingdate` = CURDATE(),
-					`publisherid` = :publisherid';
-
-		$statement = $pdo->prepare($sql);
-
-		$statement->bindValue(':title', $_POST['title']);
-		$statement->bindValue(':publisherid', $_POST['publisherid']);
-
-		$statement->execute();
+		insertBook($pdo, $_POST['title'], $_POST['publishingdate'], $_POST['publisherid']);
 
 		header('location: books.php');
 	} catch (PDOException $e) {

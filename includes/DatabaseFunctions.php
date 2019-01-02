@@ -20,3 +20,16 @@ function getBook(PDO $pdo, int $id)
 
 	return $statement->fetch();
 }
+
+function insertBook(PDO $pdo, string $title, string $publishingdate, int $publisherid)
+{
+	$parameters = [
+		':title' => $title,
+		':publishingdate' => $publishingdate,
+		':publisherid' => $publisherid,
+	];
+
+	$sql = 'INSERT INTO `books` SET `title` = :title, `publishingdate` = :publishingdate, `publisherid` = :publisherid';
+
+	query($pdo, $sql, $parameters);
+}
