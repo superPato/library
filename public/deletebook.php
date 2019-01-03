@@ -2,13 +2,9 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-
-	$sql = 'DELETE FROM `books` WHERE id = :id';
-
-	$stmt = $pdo->prepare($sql);
-
-	$stmt->bindValue(':id', $_POST['id']);
-	$stmt->execute();
+	include __DIR__ . '/../includes/DatabaseFunctions.php';
+	
+	deleteBook($pdo, $_POST['id']);
 
 	header('location: books.php');
 } catch (PDOException $e) {

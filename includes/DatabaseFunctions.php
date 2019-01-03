@@ -51,3 +51,10 @@ function editBook(PDO $pdo, int $bookid, string $title, string $publishingdate, 
 
 	query($pdo, $sql, $parameters);
 }
+
+function deleteBook(PDO $pdo, int $id)
+{
+	$parameters = [':id' => $id];
+
+	query($pdo, 'DELETE FROM `books` WHERE `id` = :id', $parameters);
+}
