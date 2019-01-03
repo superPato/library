@@ -4,11 +4,7 @@ try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-	$sql = 'SELECT `books`.`id`, `title`, `name`
-			FROM `books` INNER JOIN `publisher`
-				ON `publisherid` = `publisher`.`id`';
-
-	$books = $pdo->query($sql);
+	$books = allBooks($pdo);
 
 	$title = 'List Books';
 

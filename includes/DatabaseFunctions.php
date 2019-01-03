@@ -21,6 +21,15 @@ function getBook(PDO $pdo, int $id)
 	return $statement->fetch();
 }
 
+function allBooks(PDO $pdo)
+{
+	$result = query($pdo, 'SELECT `books`.`id`, `title`, `name`
+				 FROM `books` INNER JOIN `publisher`
+					ON `publisherid` = `publisher`.`id`');
+
+	return $result->fetchAll();
+}
+
 function insertBook(PDO $pdo, string $title, string $publishingdate, int $publisherid)
 {
 	$parameters = [
