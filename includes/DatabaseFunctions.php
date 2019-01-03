@@ -16,7 +16,7 @@ function totalBooks(PDO $pdo)
 function getBook(PDO $pdo, int $id)
 {
 	$parameters = [':id' => $id];
-	$statement = query($pdo, 'SELECT `title`, `publishingdate` FROM `books` WHERE `id` = :id', $parameters);
+	$statement = query($pdo, 'SELECT `id`, `title`, `publishingdate`, `publisherid` FROM `books` WHERE `id` = :id', $parameters);
 
 	return $statement->fetch();
 }
@@ -30,6 +30,24 @@ function insertBook(PDO $pdo, string $title, string $publishingdate, int $publis
 	];
 
 	$sql = 'INSERT INTO `books` SET `title` = :title, `publishingdate` = :publishingdate, `publisherid` = :publisherid';
+
+	query($pdo, $sql, $parameters);
+}
+
+function editBook(PDO $pdo, int $bookid, string $title, string $publishingdate, string $publisherid)
+{
+	$parameters = [
+		':bookid' => $bookid,
+		':title' => $title,
+		':publishingdate' => $publishingdate,
+		':publisherid' => $publisherid,
+	];
+
+	$sql = 'UPDATE `books` SET
+		`title` = :title,
+		`publishingdate` = :publishingdate,
+		`publisherid` = :publisherid
+		WHERE `id` = :bookid';
 
 	query($pdo, $sql, $parameters);
 }
