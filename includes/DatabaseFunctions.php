@@ -30,35 +30,29 @@ function allBooks(PDO $pdo)
 	return $result->fetchAll();
 }
 
-function insertBook(PDO $pdo, string $title, string $publishingdate, int $publisherid)
+function insertBook(PDO $pdo, array $fields)
 {
-	$parameters = [
-		':title' => $title,
-		':publishingdate' => $publishingdate,
-		':publisherid' => $publisherid,
-	];
+	$sql = "INSERT INTO `books` SET ";
 
-	$sql = 'INSERT INTO `books` SET `title` = :title, `publishingdate` = :publishingdate, `publisherid` = :publisherid';
+	foreach (array_keys($fields) as $key) {
+		$sql .= "`{$key}` = :{$key},";
+	}
+	$sql = rtrim($sql, ',');
 
-	query($pdo, $sql, $parameters);
+	query($pdo, $sql, $fields);
 }
 
-function editBook(PDO $pdo, int $bookid, string $title, string $publishingdate, string $publisherid)
+function editBook(PDO $pdo, array $fields)
 {
-	$parameters = [
-		':bookid' => $bookid,
-		':title' => $title,
-		':publishingdate' => $publishingdate,
-		':publisherid' => $publisherid,
-	];
+	$sql = 'UPDATE `books` SET ';
 
-	$sql = 'UPDATE `books` SET
-		`title` = :title,
-		`publishingdate` = :publishingdate,
-		`publisherid` = :publisherid
-		WHERE `id` = :bookid';
+	foreach (array_keys($fields) as $key) {
+		$sql .= "`{$key}` = :{$key},";
+	}
+	$sql = rtrim($sql, ',');
+	$sql .= " WHERE `id` = :id";
 
-	query($pdo, $sql, $parameters);
+	query($pdo, $sql, $fields);
 }
 
 function deleteBook(PDO $pdo, int $id)

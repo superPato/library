@@ -5,7 +5,12 @@ include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 try {
 	if (isset($_POST['title'])) {
-		editBook($pdo, $_POST['bookid'], $_POST['title'], $_POST['publishingdate'], $_POST['publisherid']);
+		editBook($pdo, [
+			'id' => $_POST['bookid'], 
+			'title' => $_POST['title'], 
+			'publishingdate' => $_POST['publishingdate'], 
+			'publisherid' => $_POST['publisherid']
+		]);
 
 		header('location: books.php');
 	} else {

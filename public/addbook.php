@@ -5,7 +5,10 @@ if (isset($_POST['title'])) {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
 		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		insertBook($pdo, $_POST['title'], $_POST['publishingdate'], $_POST['publisherid']);
+		insertBook($pdo, [
+			'title' => $_POST['title'],
+			'publisherid' => $_POST['publisherid']
+		]);
 
 		header('location: books.php');
 	} catch (PDOException $e) {
