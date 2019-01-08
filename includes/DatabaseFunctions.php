@@ -32,25 +32,16 @@ function allBooks(PDO $pdo)
 
 function insertBook(PDO $pdo, array $fields)
 {
-	$sql = "INSERT INTO `books` SET ";
-
-	foreach (array_keys($fields) as $key) {
-		$sql .= "`{$key}` = :{$key},";
-	}
-	$sql = rtrim($sql, ',');
+	$placeholders = getStringPlaceholders($fields);
+	$sql = "INSERT INTO `books` SET {$placeholders}";
 
 	query($pdo, $sql, $fields);
 }
 
 function editBook(PDO $pdo, array $fields)
 {
-	$sql = 'UPDATE `books` SET ';
-
-	foreach (array_keys($fields) as $key) {
-		$sql .= "`{$key}` = :{$key},";
-	}
-	$sql = rtrim($sql, ',');
-	$sql .= " WHERE `id` = :id";
+	$placeholders = getStringPlaceholders($fields);
+	$sql = "UPDATE `books` SET {$placeholders} WHERE `id` = :id";
 
 	query($pdo, $sql, $fields);
 }
@@ -60,4 +51,14 @@ function deleteBook(PDO $pdo, int $id)
 	$parameters = [':id' => $id];
 
 	query($pdo, 'DELETE FROM `books` WHERE `id` = :id', $parameters);
+}
+
+function getStringPlaceholders($fields)
+{
+	$placeholders = '';
+	foreach (array_keys($fields) as $key) {
+		$placeholders .= "`{$key}` = :{$key},";
+	}
+
+	return rtrim($placeholders, ',');
 }
