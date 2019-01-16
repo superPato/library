@@ -1,4 +1,4 @@
-<p><?= $totalBooks ?> books has been submitted.</p>
+<p class="text-right"><?= $totalBooks ?> books has been submitted.</p>
 
 <?php foreach ($books as $book): ?>
 <p>
@@ -12,4 +12,6 @@
 		<button type="submit">Delete</button>
 	</form>
 </p>
+
+<hr>
 <?php endforeach ?>
