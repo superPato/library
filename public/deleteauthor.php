@@ -2,12 +2,9 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
+	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-	$sql = 'DELETE FROM `authors` WHERE `id` = :id';
-
-	$stmt = $pdo->prepare($sql);
-	$stmt->bindValue(':id', $_POST['id']);
-	$stmt->execute();
+	delete($pdo, 'authors', $_POST['id']);
 
 	header('location: authors.php');
 } catch (PDOException $e) {

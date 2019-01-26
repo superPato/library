@@ -5,7 +5,7 @@ include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 try {
 	if (isset($_POST['title'])) {
-		editBook($pdo, [
+		edit($pdo, 'books', [
 			'id' => $_POST['bookid'], 
 			'title' => $_POST['title'], 
 			'publishingdate' => $_POST['publishingdate'], 
@@ -14,7 +14,7 @@ try {
 
 		header('location: books.php');
 	} else {
-		$book = getBook($pdo, $_GET['id']);
+		$book = findById($pdo, 'books', $_GET['id']);
 
 		$publishers = $pdo->query('SELECT `id`, `name` FROM `publisher`');
 

@@ -4,7 +4,7 @@ try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 	
-	deleteBook($pdo, $_POST['id']);
+	delete($pdo, 'books', $_POST['id']);
 
 	header('location: books.php');
 } catch (PDOException $e) {

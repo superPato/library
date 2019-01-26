@@ -5,7 +5,7 @@ if (isset($_POST['title'])) {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
 		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		insertBook($pdo, [
+		insert($pdo, 'books', [
 			'title'          => $_POST['title'],
 			'publishingdate' => $_POST['publishingdate'],
 			'publisherid'    => $_POST['publisherid']

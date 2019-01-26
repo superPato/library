@@ -7,50 +7,46 @@ function query(PDO $pdo, string $sql, array $parameters = [])
 	return $statement;
 }
 
-function totalBooks(PDO $pdo)
+function total(PDO $pdo, string $table)
 {
-    $statement = query($pdo, 'SELECT COUNT(*) FROM `books`');
+    $statement = query($pdo, "SELECT COUNT(*) FROM {$table}");
     return $statement->fetch()[0];
 }
 
-function getBook(PDO $pdo, int $id)
+function findById(PDO $pdo, string $table, $valueId,  string $primaryKey = 'id')
 {
-	$parameters = [':id' => $id];
-	$statement = query($pdo, 'SELECT `id`, `title`, `publishingdate`, `publisherid` FROM `books` WHERE `id` = :id', $parameters);
+	$parameters = [':id' => $valueId];
+	$statement = query($pdo, "SELECT * FROM {$table} WHERE `{$primaryKey}` = :id", $parameters);
 
 	return $statement->fetch();
 }
 
-function allBooks(PDO $pdo)
+function findAll(PDO $pdo, string $table)
 {
-	$result = query($pdo, 'SELECT `books`.`id`, `title`, `name`
-				 FROM `books` INNER JOIN `publisher`
-					ON `publisherid` = `publisher`.`id`');
-
-	return $result->fetchAll();
+	return query($pdo, "SELECT * FROM `{$table}`")->fetchAll();
 }
 
-function insertBook(PDO $pdo, array $fields)
+function insert(PDO $pdo, string $table, array $fields)
 {
 	$placeholders = getStringPlaceholders($fields);
-	$sql = "INSERT INTO `books` SET {$placeholders}";
+	$sql = "INSERT INTO `{$table}` SET {$placeholders}";
 
 	query($pdo, $sql, $fields);
 }
 
-function editBook(PDO $pdo, array $fields)
+function edit(PDO $pdo, string $table, array $fields, string $primaryKey = 'id')
 {
 	$placeholders = getStringPlaceholders($fields);
-	$sql = "UPDATE `books` SET {$placeholders} WHERE `id` = :id";
+	$sql = "UPDATE `{$table}` SET {$placeholders} WHERE `{$primaryKey}` = :{$primaryKey}";
 
 	query($pdo, $sql, $fields);
 }
 
-function deleteBook(PDO $pdo, int $id)
+function delete(PDO $pdo, string $table, $id, string $primaryKey = 'id')
 {
 	$parameters = [':id' => $id];
 
-	query($pdo, 'DELETE FROM `books` WHERE `id` = :id', $parameters);
+	query($pdo, "DELETE FROM `{$table}` WHERE `{$primaryKey}` = :id", $parameters);
 }
 
 function getStringPlaceholders($fields)

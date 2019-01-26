@@ -3,17 +3,12 @@
 if (isset($_POST['firstname'])) {
 	try {
 		include __DIR__ . '/../includes/DatabaseConnection.php';
+		include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-		$sql = 'INSERT INTO authors SET
-					firstname = :firstname,
-					lastname = :lastname';
-
-		$stmt = $pdo->prepare($sql);
-
-		$stmt->bindValue(':firstname', $_POST['firstname']);
-		$stmt->bindValue(':lastname', $_POST['lastname']);
-
-		$stmt->execute();
+		insert($pdo, 'authors', [
+			'firstname' => $_POST['firstname'],
+			'lastname'  => $_POST['lastname'],
+		]);
 
 		header('location: authors.php');
 	} catch (PDOException $e) {

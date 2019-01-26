@@ -4,11 +4,22 @@ try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../includes/DatabaseFunctions.php';
 
-	$books = allBooks($pdo);
+	$result = findAll($pdo, 'books');
+
+	$books = [];
+	foreach ($result as $book) {
+		$publisher = findById($pdo, 'publisher', $book['publisherid']);
+
+		$books[] = [
+			'id'    => $book['id'],
+			'title' => $book['title'],
+			'name'  => $publisher['name'],
+		];
+	}
 
 	$title = 'List Books';
 
-	$totalBooks = totalBooks($pdo);
+	$totalBooks = total($pdo, 'books');
 
 	ob_start();
 
