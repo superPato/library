@@ -5,7 +5,7 @@ include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 try {
 	if (isset($_POST['title'])) {
-		edit($pdo, 'books', [
+		save($pdo, 'books', [
 			'id' => $_POST['bookid'], 
 			'title' => $_POST['title'], 
 			'publishingdate' => $_POST['publishingdate'], 

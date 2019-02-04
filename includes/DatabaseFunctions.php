@@ -42,6 +42,18 @@ function edit(PDO $pdo, string $table, array $fields, string $primaryKey = 'id')
 	query($pdo, $sql, $fields);
 }
 
+function save(PDO $pdo, string $table, array $record, string $primaryKey = 'id')
+{
+	try {
+		if ($record[$primaryKey] == '') {
+			$record[$primaryKey] = null;
+		}
+		insert($pdo, $table, $record);
+	} catch (PDOException $e) {
+		edit($pdo, $table, $record, $primaryKey);
+	}
+}
+
 function delete(PDO $pdo, string $table, $id, string $primaryKey = 'id')
 {
 	$parameters = [':id' => $id];
