@@ -4,25 +4,24 @@ include __DIR__ . '/../includes/DatabaseConnection.php';
 include __DIR__ . '/../includes/DatabaseFunctions.php';
 
 try {
-	if (isset($_POST['title'])) {
-		save($pdo, 'books', [
-			'id' => $_POST['bookid'], 
-			'title' => $_POST['title'], 
-			'publishingdate' => $_POST['publishingdate'], 
-			'publisherid' => $_POST['publisherid']
-		]);
+	if (isset($_POST['book'])) {
+		$book = $_POST['book'];
+		save($pdo, 'books', $book);
 
 		header('location: books.php');
 	} else {
-		$book = findById($pdo, 'books', $_GET['id']);
+		$title = 'Add book';
 
-		$publishers = $pdo->query('SELECT `id`, `name` FROM `publisher`');
+		if (isset($_GET['id'])) {
+			$title = 'Update book';
+			$book = findById($pdo, 'books', $_GET['id']);
+		}
 
-		$title = 'Update book: ' . $book['title'];
+		$publishers = findAll($pdo, 'publisher');
 
 		ob_start();
 
-		include __DIR__ . '/../templates/editbook.html.php';
+		include __DIR__ . '/../templates/savebook.html.php';
 
 		$output = ob_get_clean();
 	}

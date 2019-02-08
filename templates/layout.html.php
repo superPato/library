@@ -15,13 +15,13 @@
 					<li class="has-submenu">
 						<a href="books.php">Books</a>
 						<ul>
-							<li><a href="addbook.php">Add Book</a></li>
+							<li><a href="savebook.php">Add Book</a></li>
 						</ul>
 					</li>
 					<li class="has-submenu">
 						<a href="authors.php">Authors</a>
 						<ul>
-							<li><a href="addauthor.php">Add Author</a></li>
+							<li><a href="saveauthor.php">Add Author</a></li>
 						</ul>
 					</li>
 				</ul>
