@@ -1,12 +1,15 @@
 <?php
 
-include __DIR__ . '/../includes/DatabaseConnection.php';
-include __DIR__ . '/../includes/DatabaseFunctions.php';
-
 try {
+	include __DIR__ . '/../includes/DatabaseConnection.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
+
+	$bookTable = new DatabaseTable($pdo, 'books');
+	$publisherTable = new DatabaseTable($pdo, 'publisher');
+
 	if (isset($_POST['book'])) {
 		$book = $_POST['book'];
-		save($pdo, 'books', $book);
+		$bookTable->save($book);
 
 		header('location: books.php');
 	} else {
@@ -14,11 +17,11 @@ try {
 
 		if (isset($_GET['id'])) {
 			$title = 'Update book';
-			$book = findById($pdo, 'books', $_GET['id']);
+			$book = $bookTable->findById($_GET['id']);
 		}
 
-		$publishers = findAll($pdo, 'publisher');
-
+		$publishers = $publisherTable->findAll();
+	
 		ob_start();
 
 		include __DIR__ . '/../templates/savebook.html.php';

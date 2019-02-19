@@ -1,11 +1,13 @@
 <?php
 
-include __DIR__ . '/../includes/DatabaseConnection.php';
-include __DIR__ . '/../includes/DatabaseFunctions.php';
-
 try {
+	include __DIR__ . '/../includes/DatabaseConnection.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
+
+	$authorTable = new DatabaseTable($pdo, 'authors');
+
 	if (isset($_POST['author'])) {
-		save($pdo, 'authors', $_POST['author']);
+		$authorTable->save($_POST['author']);
 
 		header('location: authors.php');
 	} else {
@@ -13,7 +15,7 @@ try {
 
 		if (isset($_GET['id'])) {
 			$title = 'Update author';
-			$author = findById($pdo, 'authors', $_GET['id']);
+			$author = $authorTable->findById($_GET['id']);
 		}
 
 		ob_start();

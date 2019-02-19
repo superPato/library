@@ -2,9 +2,10 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-	include __DIR__ . '/../includes/DatabaseFunctions.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
 
-	delete($pdo, 'authors', $_POST['id']);
+	$authorTable = new DatabaseTable($pdo, 'authors');
+	$authorTable->delete($_POST['id']);
 
 	header('location: authors.php');
 } catch (PDOException $e) {

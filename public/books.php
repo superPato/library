@@ -2,13 +2,16 @@
 
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
-	include __DIR__ . '/../includes/DatabaseFunctions.php';
+	include __DIR__ . '/../classes/DatabaseTable.php';
 
-	$result = findAll($pdo, 'books');
+	$booksTable = new DatabaseTable($pdo, 'books');
+	$publisherTable = new DatabaseTable($pdo, 'publisher');
+
+	$result = $booksTable->findAll();
 
 	$books = [];
 	foreach ($result as $book) {
-		$publisher = findById($pdo, 'publisher', $book['publisherid']);
+		$publisher = $publisherTable->findById($book['publisherid']);
 
 		$books[] = [
 			'id'    => $book['id'],
@@ -19,7 +22,7 @@ try {
 
 	$title = 'List Books';
 
-	$totalBooks = total($pdo, 'books');
+	$totalBooks = $booksTable->total();
 
 	ob_start();
 
