@@ -3,19 +3,24 @@
 try {
 	include __DIR__ . '/../includes/DatabaseConnection.php';
 	include __DIR__ . '/../classes/DatabaseTable.php';
+	include __DIR__ . '/../classes/controllers/AuthorController.php';
 
-	$authorTable = new DatabaseTable($pdo, 'authors');
+	$authorController = new AuthorController(new DatabaseTable($pdo, 'authors'));
 
-	$authors = $authorTable->findAll();
+	if (isset($_GET['edit'])) {
+		$page = $authorController->edit();
+	}
+	else if (isset($_GET['delete']))
+	{
+		$page = $authorController->delete();
+	}
+	else
+	{
+		$page = $authorController->home();
+	}
 
-	$title = 'Author list';
-
-	ob_start();
-
-	include __DIR__ . '/../templates/authors.html.php';
-
-	$output = ob_get_clean();
-
+	$title  = $page['title'];
+	$output = $page['output'];
 } catch (PDOException $e) {
 	$title = 'An error has ocurred';
 

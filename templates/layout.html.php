@@ -13,15 +13,15 @@
 				<ul class="primary-nav">
 					<li><a href="index.php">Home</a></li>
 					<li class="has-submenu">
-						<a href="books.php">Books</a>
+						<a href="index.php?list">Books</a>
 						<ul>
-							<li><a href="savebook.php">Add Book</a></li>
+							<li><a href="index.php?edit">Add Book</a></li>
 						</ul>
 					</li>
 					<li class="has-submenu">
 						<a href="authors.php">Authors</a>
 						<ul>
-							<li><a href="saveauthor.php">Add Author</a></li>
+							<li><a href="authors.php?edit">Add Author</a></li>
 						</ul>
 					</li>
 				</ul>
