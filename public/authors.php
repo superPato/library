@@ -7,17 +7,9 @@ try {
 
 	$authorController = new AuthorController(new DatabaseTable($pdo, 'authors'));
 
-	if (isset($_GET['edit'])) {
-		$page = $authorController->edit();
-	}
-	else if (isset($_GET['delete']))
-	{
-		$page = $authorController->delete();
-	}
-	else
-	{
-		$page = $authorController->home();
-	}
+	$action = $_GET['action'] ?? 'home';
+
+	$page = $authorController->$action();
 
 	$title  = $page['title'];
 	$output = $page['output'];

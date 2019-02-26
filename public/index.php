@@ -10,22 +10,9 @@ try {
 
     $bookController = new BookController($booksTable, $publishersTable);
 
-    if (isset($_GET['edit'])) 
-    {
-        $page = $bookController->edit();
-    }
-    else if (isset($_GET['delete']))
-    {
-        $page = $bookController->delete();
-    }
-    else if (isset($_GET['list']))
-    {
-        $page = $bookController->list();
-    }
-    else 
-    {
-        $page = $bookController->home();
-    }
+    $action = $_GET['action'] ?? 'home';
+
+    $page = $bookController->$action();
 
     $title  = $page['title'];
     $output = $page['output'];

@@ -57,22 +57,22 @@ class BookController {
         if (isset($_POST['book'])) {
             $book = $_POST['book'];
             $this->booksTable->save($book);
-    
-            header('location: index.php?list');
+
+            header('location: index.php?action=list');
         } else {
             $title = 'Add book';
-    
+
             if (isset($_GET['id'])) {
                 $title = 'Update book';
                 $book = $this->booksTable->findById($_GET['id']);
             }
-    
+
             $publishers = $this->publishersTable->findAll();
-        
+
             ob_start();
-    
+
             include __DIR__ . '/../../templates/savebook.html.php';
-    
+
             $output = ob_get_clean();
         }
 
@@ -83,6 +83,6 @@ class BookController {
     {
         $this->booksTable->delete($_POST['id']);
 
-	    header('location: index.php?list');
+	    header('location: index.php?action=list');
     }
 }
