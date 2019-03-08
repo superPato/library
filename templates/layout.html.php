@@ -28,6 +28,7 @@
 		</nav>
 		<div class="container">
 			<main>
+				<h2><?= $title ?></h2>
 				<?= $output ?>
 			</main>
 		</div>

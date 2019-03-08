@@ -1,4 +1,3 @@
-<h2><?= $title ?></h2>
 <form action="" method="post">
 	<input type="hidden" name="book[id]" value="<?= $book['id'] ?? '' ?>">
 
@@ -14,7 +13,7 @@
 		<label for="publisherid">Publisher</label>
 		<select name="book[publisherid]" id="publisherid">
 			<?php foreach ($publishers as $publisher): ?>
-			<option value="<?= $publisher['id'] ?>" 
+			<option value="<?= $publisher['id'] ?>"
 				<?php if (isset($book['publisherid']) && $book['publisherid'] == $publisher['id']) echo "selected" ?>
 				>
 				<?= $publisher['name'] ?>
