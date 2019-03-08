@@ -13,15 +13,10 @@ class BookController {
 
     public function home()
     {
-        $title = 'Internet Library Database';
-
-        ob_start();
-
-        include __DIR__ . '/../../templates/home.html.php';
-
-        $output = ob_get_clean();
-
-        return compact('title', 'output');
+        return [
+            'title'    => 'Internet Library Database', 
+            'template' => 'home.html.php'
+        ];
     }
 
     public function list()
@@ -39,17 +34,13 @@ class BookController {
             ];
         }
 
-        $title = 'List Books';
-
         $totalBooks = $this->booksTable->total();
 
-        ob_start();
-
-        include __DIR__ . '/../../templates/books.html.php';
-
-        $output = ob_get_clean();
-
-        return compact('title', 'output');
+        return [
+            'title'     => 'List Books',
+            'template'  => 'books.html.php',
+            'variables' => compact('books', 'totalBooks'),
+        ];
     }
 
     public function edit()
@@ -68,15 +59,16 @@ class BookController {
             }
 
             $publishers = $this->publishersTable->findAll();
-
-            ob_start();
-
-            include __DIR__ . '/../../templates/savebook.html.php';
-
-            $output = ob_get_clean();
         }
 
-        return compact('title', 'output');
+        return [
+            'title'     => $title,
+            'template'  => 'savebook.html.php',
+            'variables' => [
+                'book'       => $book ?? null,
+                'publishers' => $publishers,
+            ]
+        ];
     }
 
     public function delete()

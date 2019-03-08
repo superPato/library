@@ -14,8 +14,17 @@ try {
 
     $page = $bookController->$action();
 
-    $title  = $page['title'];
-    $output = $page['output'];
+    $title = $page['title'];
+
+    if (isset($page['variables'])) {
+        extract($page['variables']);
+    }
+
+    ob_start();
+
+    include __DIR__ . "/../templates/{$page['template']}";
+
+    $output = ob_get_clean();
 } catch (PDOException $e) {
     $title = 'An error has ocurred.';
 

@@ -12,15 +12,11 @@ class AuthorController {
 	{
 		$authors = $this->authorsTable->findAll();
 
-		$title = 'Author list';
-
-		ob_start();
-
-		include __DIR__ . '/../../templates/authors.html.php';
-
-		$output = ob_get_clean();
-
-		return compact('title', 'output');
+		return [
+			'title'     => 'Author list', 
+			'template'  => 'authors.html.php',
+			'variables' => compact('authors')
+		];
 	}
 
 	public function edit()
@@ -37,14 +33,14 @@ class AuthorController {
 				$author = $this->authorsTable->findById($_GET['id']);
 			}
 
-			ob_start();
-
-			include __DIR__ . '/../../templates/saveauthor.html.php';
-
-			$output = ob_get_clean();
+			return [
+				'title'     => $title,
+				'template'  => 'saveauthor.html.php',
+				'variables' => [
+					'author' => $author ?? null,
+				]
+			];
 		}
-
-		return compact('title', 'output');
 	}
 
 	public function delete()
