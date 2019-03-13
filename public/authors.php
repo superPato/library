@@ -20,7 +20,12 @@ try {
 
 	$action = $_GET['action'] ?? 'home';
 
-	$page = $authorController->$action();
+	if ($action == strtolower($action)) {
+		$page = $authorController->$action();
+	} else {
+		http_response_code(301);
+		header('location: index.php?action=' . strtolower($action));
+	}
 
 	$title  = $page['title'];
 
