@@ -14,22 +14,63 @@ function loadTemplate($templateFileName, $variables = [])
 try {
     include __DIR__ . '/../includes/DatabaseConnection.php';
     include __DIR__ . '/../classes/DatabaseTable.php';
-    include __DIR__ . '/../classes/controllers/BookController.php';
 
     $booksTable = new DatabaseTable($pdo, 'books');
     $publishersTable = new DatabaseTable($pdo, 'publisher');
+    $authorsTable = new DatabaseTable($pdo, 'authors');
 
-    $bookController = new BookController($booksTable, $publishersTable);
+    $route = $_GET['route'] ?? 'books/home';
 
-    $action = $_GET['action'] ?? 'home';
-
-    if ($action == strtolower($action)) {
-        $page = $bookController->$action();
-    } else {
+    if ($route == strtolower($route)) 
+    {
+        if ($route == 'books/list') 
+        {
+            include __DIR__ . '/../classes/controllers/BookController.php';
+            $controller = new BookController($booksTable, $publishersTable);
+            $page = $controller->list();
+        } 
+        elseif ($route == 'books/edit') 
+        {
+            include __DIR__ . '/../classes/controllers/BookController.php';
+            $controller = new BookController($booksTable, $publishersTable);
+            $page = $controller->edit();
+        }
+        elseif ($route == 'books/delete') 
+        {
+            include __DIR__ . '/../classes/controllers/BookController.php';
+            $controller = new BookController($booksTable, $publishersTable);
+            $page = $controller->delete();
+        }
+        elseif ($route == 'books/home') 
+        {
+            include __DIR__ . '/../classes/controllers/BookController.php';
+            $controller = new BookController($booksTable, $publishersTable);
+            $page = $controller->home();
+        }
+        elseif ($route == 'authors/home') 
+        {
+            include __DIR__ . '/../classes/controllers/AuthorController.php';
+            $controller = new AuthorController($authorsTable);
+            $page = $controller->home();
+        }
+        elseif ($route == 'authors/edit') 
+        {
+            include __DIR__ . '/../classes/controllers/AuthorController.php';
+            $controller = new AuthorController($authorsTable);
+            $page = $controller->edit();
+        }
+        elseif ($route == 'authors/delete') 
+        {
+            include __DIR__ . '/../classes/controllers/AuthorController.php';
+            $controller = new AuthorController($authorsTable);
+            $page = $controller->delete();
+        }
+    } 
+    else
+    {
         http_response_code(301);
-        header("location: index.php?action=" . strtolower($action));
+        header('location: index.php?route=' . strtolower($action));
     }
-
 
     $title = $page['title'];
 
