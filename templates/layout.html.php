@@ -4,8 +4,8 @@
 		<meta charset="UTF-8">
 		<title><?= $title ?></title>
 		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-		<link rel="stylesheet" href="normalize.css">
-		<link rel="stylesheet" href="app.css">
+		<link rel="stylesheet" href="/normalize.css">
+		<link rel="stylesheet" href="/app.css">
 	</head>
 	<body>
 		<nav class="main grouping">
@@ -13,15 +13,15 @@
 				<ul class="primary-nav">
 					<li><a href="index.php">Home</a></li>
 					<li class="has-submenu">
-						<a href="index.php?route=books/list">Books</a>
+						<a href="/books/list">Books</a>
 						<ul>
-							<li><a href="index.php?route=books/edit">Add Book</a></li>
+							<li><a href="/books/edit">Add Book</a></li>
 						</ul>
 					</li>
 					<li class="has-submenu">
-						<a href="index.php?route=authors/home">Authors</a>
+						<a href="/authors/home">Authors</a>
 						<ul>
-							<li><a href="index.php?route=authors/edit">Add Author</a></li>
+							<li><a href="/authors/edit">Add Author</a></li>
 						</ul>
 					</li>
 				</ul>

@@ -19,7 +19,7 @@ try {
     $publishersTable = new DatabaseTable($pdo, 'publisher');
     $authorsTable = new DatabaseTable($pdo, 'authors');
 
-    $route = $_GET['route'] ?? 'books/home';
+    $route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
     if ($route == strtolower($route)) 
     {

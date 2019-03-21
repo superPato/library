@@ -49,7 +49,7 @@ class BookController {
             $book = $_POST['book'];
             $this->booksTable->save($book);
 
-            header('location: index.php?action=list');
+            header('location: /books/list');
         } else {
             $title = 'Add book';
 
@@ -75,6 +75,6 @@ class BookController {
     {
         $this->booksTable->delete($_POST['id']);
 
-	    header('location: index.php?action=list');
+	    header('location: /books/list');
     }
 }

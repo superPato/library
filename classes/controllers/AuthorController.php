@@ -24,7 +24,7 @@ class AuthorController {
 		if (isset($_POST['author'])) {
 			$this->authorsTable->save($_POST['author']);
 
-			header('location: authors.php');
+			header('location: /authors/home');
 		} else {
 			$title = 'Add a new author';
 
@@ -47,6 +47,6 @@ class AuthorController {
 	{
 		$this->authorsTable->delete($_POST['id']);
 
-		header('location: authors.php');
+		header('location: /authors/home');
 	}
 }
