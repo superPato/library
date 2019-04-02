@@ -5,7 +5,6 @@ class LibraryRoutes
 	public function callAction($route)
 	{
 		include __DIR__ . '/../includes/DatabaseConnection.php';
-	    include __DIR__ . '/../classes/DatabaseTable.php';
 
 	    $booksTable = new DatabaseTable($pdo, 'books');
 	    $publishersTable = new DatabaseTable($pdo, 'publisher');
