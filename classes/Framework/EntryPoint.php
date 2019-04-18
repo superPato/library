@@ -1,5 +1,7 @@
 <?php
 
+namespace Framework;
+
 class EntryPoint
 {
 	private $route;
@@ -27,7 +29,7 @@ class EntryPoint
 
 	    ob_start();
 
-	    require __DIR__ . "/../templates/{$templateFileName}";
+	    require __DIR__ . "/../../templates/{$templateFileName}";
 
 	    return ob_get_clean();
 	}
@@ -42,6 +44,6 @@ class EntryPoint
 			? $this->loadTemplate($page['template'], $page['variables'])
 			: $this->loadTemplate($page['template']); 
 
-		include __DIR__ . '/../templates/layout.html.php';
+		include __DIR__ . '/../../templates/layout.html.php';
 	}
 }

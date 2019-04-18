@@ -1,6 +1,10 @@
 <?php
 
-class BookController {
+namespace Library\Controllers;
+
+use Framework\DatabaseTable;
+
+class Book {
     private $booksTable;
     private $publishersTable;
 

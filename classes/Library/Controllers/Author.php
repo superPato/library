@@ -1,9 +1,11 @@
 <?php
 
-class AuthorController {
+namespace Library\Controllers;
+
+class Author {
 	private $authorsTable;
 
-	public function __construct(DatabaseTable $authorsTable)
+	public function __construct(\Framework\DatabaseTable $authorsTable)
 	{
 		$this->authorsTable = $authorsTable;
 	}

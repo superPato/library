@@ -1,5 +1,8 @@
 <?php
 
+use Framework\EntryPoint;
+use Library\LibraryRoutes;
+
 try {
     include __DIR__ . '/../includes/autoload.php';
 

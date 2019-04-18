@@ -1,12 +1,14 @@
 <?php
 
+namespace Framework;
+
 class DatabaseTable {
 
     private $pdo;
     private $table;
     private $primaryKey;
 
-    public function __construct(PDO $pdo, string $table, string $primaryKey = 'id')
+    public function __construct(\PDO $pdo, string $table, string $primaryKey = 'id')
     {
         $this->pdo = $pdo;
         $this->table = $table;
