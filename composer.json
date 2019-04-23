@@ -1,0 +1,19 @@
+{
+    "name": "ducke/library",
+    "description": "Library Project",
+    "type": "library novice",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cesar Acual",
+            "email": "chechaacual@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "classes/Framework",
+            "Library\\": "classes/Library"
+        }
+    }
+}

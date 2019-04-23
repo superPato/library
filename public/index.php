@@ -1,11 +1,11 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
 use Framework\EntryPoint;
 use Library\LibraryRoutes;
 
 try {
-    include __DIR__ . '/../includes/autoload.php';
-
     $route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
     $entryPoint = new EntryPoint($route, new LibraryRoutes());
