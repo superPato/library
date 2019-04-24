@@ -47,23 +47,24 @@ class Book {
         ];
     }
 
+    public function saveEdit()
+    {
+        $book = $_POST['book'];
+        $this->booksTable->save($book);
+
+        header('location: /books/list');
+    }
+
     public function edit()
     {
-        if (isset($_POST['book'])) {
-            $book = $_POST['book'];
-            $this->booksTable->save($book);
+        $title = 'Add book';
 
-            header('location: /books/list');
-        } else {
-            $title = 'Add book';
-
-            if (isset($_GET['id'])) {
-                $title = 'Update book';
-                $book = $this->booksTable->findById($_GET['id']);
-            }
-
-            $publishers = $this->publishersTable->findAll();
+        if (isset($_GET['id'])) {
+            $title = 'Update book';
+            $book = $this->booksTable->findById($_GET['id']);
         }
+
+        $publishers = $this->publishersTable->findAll();
 
         return [
             'title'     => $title,

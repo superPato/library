@@ -8,7 +8,7 @@ use Library\LibraryRoutes;
 try {
     $route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
-    $entryPoint = new EntryPoint($route, new LibraryRoutes());
+    $entryPoint = new EntryPoint($route, $_SERVER['REQUEST_METHOD'], new LibraryRoutes());
     $entryPoint->run();
 } catch (PDOException $e) {
     $title = 'An error has ocurred.';

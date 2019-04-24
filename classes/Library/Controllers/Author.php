@@ -21,28 +21,29 @@ class Author {
 		];
 	}
 
+	public function saveEdit()
+	{
+		$this->authorsTable->save($_POST['author']);
+
+		header('location: /authors/home');
+	}
+
 	public function edit()
 	{
-		if (isset($_POST['author'])) {
-			$this->authorsTable->save($_POST['author']);
+		$title = 'Add a new author';
 
-			header('location: /authors/home');
-		} else {
-			$title = 'Add a new author';
-
-			if (isset($_GET['id'])) {
-				$title = 'Update author';
-				$author = $this->authorsTable->findById($_GET['id']);
-			}
-
-			return [
-				'title'     => $title,
-				'template'  => 'saveauthor.html.php',
-				'variables' => [
-					'author' => $author ?? null,
-				]
-			];
+		if (isset($_GET['id'])) {
+			$title = 'Update author';
+			$author = $this->authorsTable->findById($_GET['id']);
 		}
+
+		return [
+			'title'     => $title,
+			'template'  => 'saveauthor.html.php',
+			'variables' => [
+				'author' => $author ?? null,
+			]
+		];
 	}
 
 	public function delete()

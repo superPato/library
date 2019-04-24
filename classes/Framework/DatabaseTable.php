@@ -66,7 +66,7 @@ class DatabaseTable {
                 $record[$this->primaryKey] = null;
             }
             $this->insert($record);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->edit($record);
         }
     }

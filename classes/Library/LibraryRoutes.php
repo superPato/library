@@ -9,7 +9,7 @@ use Library\Controllers\Author;
 
 class LibraryRoutes 
 {
-	public function callAction($route)
+	public function getRoutes()
 	{
 		include __DIR__ . '/../../includes/DatabaseConnection.php';
 
@@ -17,42 +17,60 @@ class LibraryRoutes
 	    $publishersTable = new DatabaseTable($pdo, 'publisher');
 	    $authorsTable = new DatabaseTable($pdo, 'authors');
 
-		if ($route == 'books/list') 
-        {
-            $controller = new Book($booksTable, $publishersTable);
-            $page = $controller->list();
-        } 
-        elseif ($route == 'books/edit') 
-        {
-            $controller = new Book($booksTable, $publishersTable);
-            $page = $controller->edit();
-        }
-        elseif ($route == 'books/delete') 
-        {
-            $controller = new Book($booksTable, $publishersTable);
-            $page = $controller->delete();
-        }
-        elseif ($route == '') 
-        {
-            $controller = new Book($booksTable, $publishersTable);
-            $page = $controller->home();
-        }
-        elseif ($route == 'authors/home') 
-        {
-            $controller = new Author($authorsTable);
-            $page = $controller->home();
-        }
-        elseif ($route == 'authors/edit') 
-        {
-            $controller = new Author($authorsTable);
-            $page = $controller->edit();
-        }
-        elseif ($route == 'authors/delete') 
-        {
-            $controller = new Author($authorsTable);
-            $page = $controller->delete();
-        }
+        $bookController = new Book($booksTable, $publishersTable);
+        $authorController = new Author($authorsTable);
 
-        return $page;
+        return [
+            'books/edit' => [
+                'POST' => [
+                    'controller' => $bookController,
+                    'action'     => 'saveEdit'
+                ],
+                'GET' => [
+                    'controller' => $bookController,
+                    'action'     => 'edit'
+                ]
+            ],
+            'books/delete' => [
+                'POST' => [
+                    'controller' => $bookController,
+                    'action'    => 'delete'
+                ]
+            ],
+            'books/list' => [
+                'GET' => [
+                    'controller' => $bookController,
+                    'action'     => 'list'
+                ]
+            ],
+            '' => [
+                'GET' => [
+                    'controller' => $bookController,
+                    'action'     => 'home'
+                ]
+            ],
+            'authors/edit' => [
+                'POST' => [
+                    'controller' => $authorController,
+                    'action'     => 'saveEdit'
+                ],
+                'GET' => [
+                    'controller' => $authorController,
+                    'action'     => 'edit'
+                ]
+            ],
+            'authors/delete' => [
+                'POST' => [
+                    'controller' => $authorController,
+                    'action'     => 'delete'
+                ]
+            ],
+            'authors/home' => [
+                'GET' => [
+                    'controller' => $authorController,
+                    'action'    => 'home'
+                ]
+            ]
+        ];
 	}
 }
