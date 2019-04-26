@@ -7,7 +7,7 @@ use Framework\DatabaseTable;
 use Library\Controllers\Book;
 use Library\Controllers\Author;
 
-class LibraryRoutes 
+class LibraryRoutes implements \Framework\Routes
 {
 	public function getRoutes()
 	{
