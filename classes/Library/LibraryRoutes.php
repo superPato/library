@@ -6,6 +6,7 @@ use Framework\DatabaseTable;
 
 use Library\Controllers\Book;
 use Library\Controllers\Author;
+use Library\Controllers\Register;
 
 class LibraryRoutes implements \Framework\Routes
 {
@@ -16,9 +17,11 @@ class LibraryRoutes implements \Framework\Routes
 	    $booksTable = new DatabaseTable($pdo, 'books');
 	    $publishersTable = new DatabaseTable($pdo, 'publisher');
 	    $authorsTable = new DatabaseTable($pdo, 'authors');
+        $usersTable = new DatabaseTable($pdo, 'users');
 
         $bookController = new Book($booksTable, $publishersTable);
         $authorController = new Author($authorsTable);
+        $userController = new Register($usersTable);
 
         return [
             'books/edit' => [
@@ -70,7 +73,23 @@ class LibraryRoutes implements \Framework\Routes
                     'controller' => $authorController,
                     'action'    => 'home'
                 ]
-            ]
+            ],
+            'users/register' => [
+                'POST' => [
+                    'controller' => $userController,
+                    'action'     => 'registerUser'
+                ],
+                'GET' => [
+                    'controller' => $userController,
+                    'action'     => 'registerForm'
+                ]
+            ],
+            'users/success' => [
+                'GET' => [
+                    'controller' => $userController,
+                    'action'     => 'success'
+                ]
+            ],
         ];
 	}
 }
