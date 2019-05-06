@@ -9,7 +9,7 @@
 </div>	
 <?php endif ?>
 
-<form action="" method="post">
+<form action="" method="post" novalidate>
 	<div>
 		<label for="name">Name</label>
 		<input type="text" name="user[name]" id="name" value="<?= $user['name'] ?? ''?>">
