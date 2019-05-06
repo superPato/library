@@ -14,9 +14,36 @@ class Register {
 	{
 		$user = $_POST['user'];
 
-		$this->usersTable->save($user);
+		$valid = true;
+		$errors = [];
 
-		header('Location: /users/success');
+		if (empty($user['name'])) {
+			$valid = false;
+			$errors[] = 'Name cannot be blank';
+		}
+		if (empty($user['email'])) {
+			$valid = false;
+			$errors[] = 'Email cannot be blank';
+		}
+		if (empty($user['password'])) {
+			$valid = false;
+			$errors[] = 'Password cannot be blank';
+		}
+
+		if ($valid == true) {
+			$this->usersTable->save($user);
+
+			header('Location: /users/success');
+		} else {
+			return [
+				'template'  => 'register.html.php',
+				'title'     => 'Register an account',
+				'variables' => [
+					'errors' => $errors,
+					'user'   => $user
+				]
+			];
+		}
 	}
 
 	public function registerForm()
