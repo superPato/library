@@ -28,6 +28,13 @@ class Register {
 		} elseif (filter_var($user['email'], FILTER_VALIDATE_EMAIL) == false) {
 			$valid = false;
 			$errors[] = 'Invalid email address';
+		} else {
+			$user['email'] = strtolower($user['email']);
+
+			if (count($this->usersTable->find('email', $user['email'])) > 0) {
+				$valid = false;
+				$errors[] = 'This email has taken already.';
+			}
 		}
 
 		if (empty($user['password'])) {
@@ -36,6 +43,9 @@ class Register {
 		}
 
 		if ($valid == true) {
+			// Hash the password before saving it in the database
+			$user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+
 			$this->usersTable->save($user);
 
 			header('Location: /users/success');
