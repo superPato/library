@@ -11,7 +11,7 @@
 		<nav class="main grouping">
 				<h1><a href="/">Store Book</a></h1>
 				<ul class="primary-nav">
-					<li><a href="index.php">Home</a></li>
+					<li><a href="/">Home</a></li>
 					<li class="has-submenu">
 						<a href="/books/list">Books</a>
 						<ul>

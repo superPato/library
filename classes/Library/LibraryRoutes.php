@@ -2,26 +2,39 @@
 
 namespace Library;
 
+use Framework\Authentication;
 use Framework\DatabaseTable;
 
 use Library\Controllers\Book;
 use Library\Controllers\Author;
+use Library\Controllers\Login;
 use Library\Controllers\Register;
 
 class LibraryRoutes implements \Framework\Routes
 {
-	public function getRoutes()
+    private $booksTable;
+    private $publishersTable;
+    private $authorsTable;
+    private $usersTable;
+    private $authentication;
+
+    public function __construct()
+    {
+        include __DIR__ . '/../../includes/DatabaseConnection.php';
+
+        $this->booksTable      = new DatabaseTable($pdo, 'books');
+        $this->publishersTable = new DatabaseTable($pdo, 'publisher');
+        $this->authorsTable    = new DatabaseTable($pdo, 'authors');
+        $this->usersTable      = new DatabaseTable($pdo, 'users');
+        $this->authentication  = new Authentication($this->usersTable, 'email', 'password');
+    }
+
+	public function getRoutes(): array
 	{
-		include __DIR__ . '/../../includes/DatabaseConnection.php';
-
-	    $booksTable = new DatabaseTable($pdo, 'books');
-	    $publishersTable = new DatabaseTable($pdo, 'publisher');
-	    $authorsTable = new DatabaseTable($pdo, 'authors');
-        $usersTable = new DatabaseTable($pdo, 'users');
-
-        $bookController = new Book($booksTable, $publishersTable);
-        $authorController = new Author($authorsTable);
-        $userController = new Register($usersTable);
+        $bookController   = new Book($this->booksTable, $this->publishersTable);
+        $authorController = new Author($this->authorsTable);
+        $userController   = new Register($this->usersTable);
+        $loginController  = new Login();
 
         return [
             'books/edit' => [
@@ -32,13 +45,15 @@ class LibraryRoutes implements \Framework\Routes
                 'GET' => [
                     'controller' => $bookController,
                     'action'     => 'edit'
-                ]
+                ],
+                'login' => true
             ],
             'books/delete' => [
                 'POST' => [
                     'controller' => $bookController,
                     'action'    => 'delete'
-                ]
+                ],
+                'login' => true
             ],
             'books/list' => [
                 'GET' => [
@@ -60,13 +75,15 @@ class LibraryRoutes implements \Framework\Routes
                 'GET' => [
                     'controller' => $authorController,
                     'action'     => 'edit'
-                ]
+                ],
+                'login' => true
             ],
             'authors/delete' => [
                 'POST' => [
                     'controller' => $authorController,
                     'action'     => 'delete'
-                ]
+                ],
+                'login' => true
             ],
             'authors/home' => [
                 'GET' => [
@@ -90,6 +107,17 @@ class LibraryRoutes implements \Framework\Routes
                     'action'     => 'success'
                 ]
             ],
+            'login/error' => [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action'     => 'error'
+                ]
+            ]
         ];
 	}
+
+    public function getAuthentication(): Authentication
+    {
+        return $this->authentication;
+    }
 }
