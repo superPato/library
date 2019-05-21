@@ -15,7 +15,7 @@ class Authentication {
 		$this->passwordColumn = $passwordColumn;
 	}
 
-	public function login($username, $password): boolean
+	public function login($username, $password): bool
 	{
 		$user = $this->findUser($username);
 
@@ -29,7 +29,7 @@ class Authentication {
 		}
 	}
 
-	public function isLoguedIn(): boolean
+	public function isLoguedIn(): bool
 	{
 		if (empty($_SESSION['username'])) {
 			return false;		

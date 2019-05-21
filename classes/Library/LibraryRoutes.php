@@ -34,7 +34,7 @@ class LibraryRoutes implements \Framework\Routes
         $bookController   = new Book($this->booksTable, $this->publishersTable);
         $authorController = new Author($this->authorsTable);
         $userController   = new Register($this->usersTable);
-        $loginController  = new Login();
+        $loginController  = new Login($this->authentication);
 
         return [
             'books/edit' => [
@@ -106,6 +106,23 @@ class LibraryRoutes implements \Framework\Routes
                     'controller' => $userController,
                     'action'     => 'success'
                 ]
+            ],
+            'login' => [
+                'POST' => [
+                    'controller' => $loginController,
+                    'action'     => 'processLogin'
+                ],
+                'GET' => [
+                    'controller' => $loginController,
+                    'action'     => 'loginForm'
+                ]
+            ],
+            'login/success' => [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action'     => 'success'
+                ],
+                'login' => true
             ],
             'login/error' => [
                 'GET' => [
