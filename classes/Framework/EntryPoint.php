@@ -56,7 +56,11 @@ class EntryPoint
 				? $this->loadTemplate($page['template'], $page['variables'])
 				: $this->loadTemplate($page['template']); 
 
-			include __DIR__ . '/../../templates/layout.html.php';
+			echo $this->loadTemplate('layout.html.php', [
+				'loggedIn' => $authentication->isLoguedIn(),
+				'output'   => $output,
+				'title'    => $title,
+			]);
 		}
 	}
 }

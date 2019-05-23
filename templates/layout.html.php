@@ -24,6 +24,11 @@
 							<li><a href="/authors/edit">Add Author</a></li>
 						</ul>
 					</li>
+					<?php if ($loggedIn): ?>
+					<li><a href="/logout">Log Out</a></li>	
+					<?php else: ?>
+					<li><a href="/login">Log In</a></li>	
+					<?php endif ?>
 				</ul>
 		</nav>
 		<div class="container">

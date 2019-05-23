@@ -117,6 +117,13 @@ class LibraryRoutes implements \Framework\Routes
                     'action'     => 'loginForm'
                 ]
             ],
+            'logout' => [
+                'GET' => [
+                    'controller' => $loginController,
+                    'action' => 'logout'
+                ],
+                'login' => true
+            ],
             'login/success' => [
                 'GET' => [
                     'controller' => $loginController,

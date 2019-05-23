@@ -46,4 +46,13 @@ class Login
 			'template' => 'errorlogin.html.php'
 		];
 	}
+
+	public function logout()
+	{
+		unset($_SESSION);
+		return [
+			'title'    => 'You have been log out',
+			'template' => 'logout.html.php'
+		];
+	}
 }
