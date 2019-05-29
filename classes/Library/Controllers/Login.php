@@ -49,7 +49,7 @@ class Login
 
 	public function logout()
 	{
-		unset($_SESSION);
+		$this->authentication->logout();
 		return [
 			'title'    => 'You have been log out',
 			'template' => 'logout.html.php'

@@ -29,7 +29,7 @@ class Authentication {
 		}
 	}
 
-	public function isLoguedIn(): bool
+	public function isLoggedIn(): bool
 	{
 		if (empty($_SESSION['username'])) {
 			return false;		
@@ -43,5 +43,21 @@ class Authentication {
 	private function findUser($username)
 	{
 		return $this->usersTable->find($this->usernameColumn, strtolower($username));
+	}
+
+	public function getUser()
+	{
+		if ($this->isLoggedIn()) {
+			return $this->findUser($_SESSION['username'])[0];
+		} else {
+			return false;
+		}
+	}
+
+	public function logout()
+	{
+		unset($_SESSION['username']);
+		unset($_SESSION['password']);
+		session_regenerate_id();
 	}
 }
