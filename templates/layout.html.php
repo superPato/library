@@ -15,13 +15,17 @@
 					<li class="has-submenu">
 						<a href="/books/list">Books</a>
 						<ul>
+							<?php if ($loggedIn): ?>
 							<li><a href="/books/edit">Add Book</a></li>
+							<?php endif ?>
 						</ul>
 					</li>
 					<li class="has-submenu">
 						<a href="/authors/home">Authors</a>
 						<ul>
+							<?php if ($loggedIn): ?>
 							<li><a href="/authors/edit">Add Author</a></li>
+							<?php endif ?>
 						</ul>
 					</li>
 					<?php if ($loggedIn): ?>

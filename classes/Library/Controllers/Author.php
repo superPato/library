@@ -2,22 +2,27 @@
 
 namespace Library\Controllers;
 
+use Framework\Authentication;
+use Framework\DatabaseTable;
+
 class Author {
 	private $authorsTable;
 
-	public function __construct(\Framework\DatabaseTable $authorsTable)
+	public function __construct(DatabaseTable $authorsTable, Authentication $authentication)
 	{
 		$this->authorsTable = $authorsTable;
+		$this->authentication = $authentication;
 	}
 
 	public function home()
 	{
 		$authors = $this->authorsTable->findAll();
+		$isLoggedIn = $this->authentication->isLoggedIn();
 
 		return [
 			'title'     => 'Author list', 
 			'template'  => 'authors.html.php',
-			'variables' => compact('authors')
+			'variables' => compact('authors', 'isLoggedIn')
 		];
 	}
 

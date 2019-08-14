@@ -2,17 +2,21 @@
 
 namespace Library\Controllers;
 
+use Framework\Authentication;
 use Framework\DatabaseTable;
 
 class Book {
     private $booksTable;
     private $publishersTable;
+    private $authentication;
 
     public function __construct(DatabaseTable $booksTable,
-                                DatabaseTable $publishersTable)
+                                DatabaseTable $publishersTable,
+                                Authentication $authentication)
     {
         $this->booksTable = $booksTable;
         $this->publishersTable = $publishersTable;
+        $this->authentication = $authentication;
     }
 
     public function home()
@@ -40,10 +44,12 @@ class Book {
 
         $totalBooks = $this->booksTable->total();
 
+        $isLoggedIn = $this->authentication->isLoggedIn();
+
         return [
             'title'     => 'List Books',
             'template'  => 'books.html.php',
-            'variables' => compact('books', 'totalBooks'),
+            'variables' => compact('books', 'totalBooks', 'isLoggedIn'),
         ];
     }
 
