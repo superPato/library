@@ -33,12 +33,12 @@ class Book {
 
         $books = [];
         foreach ($result as $book) {
-            $publisher = $this->publishersTable->findById($book['publisherid']);
+            $publisher = $this->publishersTable->findById($book->publisherid);
 
             $books[] = [
-                'id'    => $book['id'],
-                'title' => $book['title'],
-                'name'  => $publisher['name'],
+                'id'    => $book->id,
+                'title' => $book->title,
+                'name'  => $publisher->name,
             ];
         }
 
