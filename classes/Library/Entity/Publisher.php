@@ -2,6 +2,7 @@
 namespace Library\Entity;
 
 class Publisher {
+	public $id;
 	public $name;
 	public $phone;
 	public $email;
