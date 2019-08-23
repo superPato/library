@@ -29,18 +29,7 @@ class Book {
 
     public function list()
     {
-        $result = $this->booksTable->findAll();
-
-        $books = [];
-        foreach ($result as $book) {
-            $publisher = $this->publishersTable->findById($book->publisherid);
-
-            $books[] = [
-                'id'    => $book->id,
-                'title' => $book->title,
-                'name'  => $publisher->name,
-            ];
-        }
+        $books = $this->booksTable->findAll();
 
         $totalBooks = $this->booksTable->total();
 

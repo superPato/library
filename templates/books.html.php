@@ -2,15 +2,16 @@
 
 <?php foreach ($books as $book): ?>
 <p>
-	<?= htmlspecialchars($book['title'], ENT_QUOTES, 'UTF-8') ?>
-	<span>Publisher - <?= htmlspecialchars($book['name'], ENT_QUOTES, 'UTF-8') ?></span>
+	<?= htmlspecialchars($book->title, ENT_QUOTES, 'UTF-8') ?>
+	<span>Publisher - <?= htmlspecialchars($book->getPublisher()->name, ENT_QUOTES, 'UTF-8') ?></span>
+    <span class="author"><?= $book->getAuthor()->name() ?></span>
 
 	<?php if ($isLoggedIn): ?>
 
-	<a href="/books/edit?id=<?= $book['id'] ?>">Edit</a>
+	<a href="/books/edit?id=<?= $book->id ?>">Edit</a>
 
 	<form action="/books/delete" method="POST">
-		<input type="hidden" name="id" value="<?= $book['id'] ?>">
+		<input type="hidden" name="id" value="<?= $book->id ?>">
 		<button type="submit">Delete</button>
 	</form>
 

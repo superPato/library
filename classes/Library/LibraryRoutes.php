@@ -22,9 +22,9 @@ class LibraryRoutes implements \Framework\Routes
     {
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
-        $this->booksTable      = new DatabaseTable($pdo, 'books');
-        $this->publishersTable = new DatabaseTable($pdo, 'publisher', 'id', \Library\Entity\Publisher::class, [$this->booksTable]);
-        $this->authorsTable    = new DatabaseTable($pdo, 'authors');
+        $this->booksTable      = new DatabaseTable($pdo, 'books', 'id', \Library\Entity\Book::class, [&$this->publishersTable, &$this->authorsTable]);
+        $this->publishersTable = new DatabaseTable($pdo, 'publisher', 'id', \Library\Entity\Publisher::class, [&$this->booksTable]);
+        $this->authorsTable    = new DatabaseTable($pdo, 'authors', 'id', \Library\Entity\Author::class, [&$this->booksTable]);
         $this->usersTable      = new DatabaseTable($pdo, 'users');
         $this->authentication  = new Authentication($this->usersTable, 'email', 'password');
     }
