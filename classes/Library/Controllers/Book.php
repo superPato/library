@@ -9,12 +9,15 @@ class Book {
     private $booksTable;
     private $publishersTable;
     private $authentication;
+    private $authorsTable;
 
     public function __construct(DatabaseTable $booksTable,
+                                DatabaseTable $authorsTable,
                                 DatabaseTable $publishersTable,
                                 Authentication $authentication)
     {
         $this->booksTable = $booksTable;
+        $this->authorsTable = $authorsTable;
         $this->publishersTable = $publishersTable;
         $this->authentication = $authentication;
     }
@@ -60,6 +63,7 @@ class Book {
         }
 
         $publishers = $this->publishersTable->findAll();
+        $authors = $this->authorsTable->findAll();
 
         return [
             'title'     => $title,
@@ -67,6 +71,7 @@ class Book {
             'variables' => [
                 'book'       => $book ?? null,
                 'publishers' => $publishers,
+                'authors'    => $authors,
             ]
         ];
     }

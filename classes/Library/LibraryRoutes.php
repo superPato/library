@@ -31,7 +31,7 @@ class LibraryRoutes implements \Framework\Routes
 
 	public function getRoutes(): array
 	{
-        $bookController   = new Book($this->booksTable, $this->publishersTable, $this->authentication);
+        $bookController   = new Book($this->booksTable, $this->authorsTable, $this->publishersTable, $this->authentication);
         $authorController = new Author($this->authorsTable, $this->authentication);
         $userController   = new Register($this->usersTable);
         $loginController  = new Login($this->authentication);
