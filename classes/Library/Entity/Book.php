@@ -15,6 +15,8 @@ class Book
     public $authorid;
     private $publishersTable;
     private $authorsTable;
+    private $author;
+    private $publisher;
 
     public function __construct(DatabaseTable $publishersTable, DatabaseTable $authorsTable)
     {
@@ -24,11 +26,19 @@ class Book
 
     public function getPublisher()
     {
-        return $this->publishersTable->findById($this->publisherid);
+        if (empty($this->publisher)) {
+            $this->publisher = $this->publishersTable->findById($this->publisherid);
+        }
+
+        return $this->publisher;
     }
 
     public function getAuthor()
     {
-        return $this->authorsTable->findById($this->authorid);
+        if (empty($this->author)) {
+            $this->author = $this->authorsTable->findById($this->authorid);
+        }
+
+        return $this->author;
     }
 }
