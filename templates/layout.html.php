@@ -28,6 +28,14 @@
 							<?php endif ?>
 						</ul>
 					</li>
+					<li class="has-submenu">
+						<a href="/tags/list">Tags</a>
+						<ul>
+						<?php if($loggedIn): ?>
+							<li><a href="/tags/edit">Add Tag</a></li>
+						<?php endif ?>
+						</ul>
+					</li>
 					<?php if ($loggedIn): ?>
 					<li><a href="/logout">Log Out</a></li>	
 					<?php else: ?>

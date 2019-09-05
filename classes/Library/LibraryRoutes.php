@@ -9,6 +9,7 @@ use Library\Controllers\Book;
 use Library\Controllers\Author;
 use Library\Controllers\Login;
 use Library\Controllers\Register;
+use Library\Controllers\Tag;
 
 class LibraryRoutes implements \Framework\Routes
 {
@@ -16,6 +17,7 @@ class LibraryRoutes implements \Framework\Routes
     private $publishersTable;
     private $authorsTable;
     private $usersTable;
+    private $tagsTable;
     private $authentication;
 
     public function __construct()
@@ -25,6 +27,7 @@ class LibraryRoutes implements \Framework\Routes
         $this->booksTable      = new DatabaseTable($pdo, 'books', 'id', \Library\Entity\Book::class, [&$this->publishersTable, &$this->authorsTable]);
         $this->publishersTable = new DatabaseTable($pdo, 'publisher', 'id', \Library\Entity\Publisher::class, [&$this->booksTable]);
         $this->authorsTable    = new DatabaseTable($pdo, 'authors', 'id', \Library\Entity\Author::class, [&$this->booksTable]);
+        $this->tagsTable       = new DatabaseTable($pdo, 'tags', 'id');
         $this->usersTable      = new DatabaseTable($pdo, 'users');
         $this->authentication  = new Authentication($this->usersTable, 'email', 'password');
     }
@@ -35,6 +38,7 @@ class LibraryRoutes implements \Framework\Routes
         $authorController = new Author($this->authorsTable, $this->authentication);
         $userController   = new Register($this->usersTable);
         $loginController  = new Login($this->authentication);
+        $tagController    = new Tag($this->tagsTable, $this->authentication);
 
         return [
             'books/edit' => [
@@ -136,7 +140,31 @@ class LibraryRoutes implements \Framework\Routes
                     'controller' => $loginController,
                     'action'     => 'error'
                 ]
-            ]
+            ],
+            'tags/list' => [
+                'GET' => [
+                    'controller' => $tagController,
+                    'action'     => 'list'
+                ]
+            ],
+            'tags/edit' => [
+                'GET' => [
+                    'controller' => $tagController,
+                    'action'     => 'edit'
+                ],
+                'POST' => [
+                    'controller' => $tagController,
+                    'action'     => 'saveEdit'
+                ],
+                'login' => true
+            ],
+            'tags/delete' => [
+                'POST' => [
+                    'controller' => $tagController,
+                    'action'     => 'delete'
+                ],
+                'login' => true
+            ],
         ];
 	}
 
