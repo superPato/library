@@ -18,23 +18,36 @@ class LibraryRoutes implements \Framework\Routes
     private $authorsTable;
     private $usersTable;
     private $tagsTable;
+    private $bookTagTable;
     private $authentication;
 
     public function __construct()
     {
         include __DIR__ . '/../../includes/DatabaseConnection.php';
 
-        $this->booksTable      = new DatabaseTable($pdo, 'books', 'id', \Library\Entity\Book::class, [&$this->publishersTable, &$this->authorsTable]);
+        $this->booksTable      = new DatabaseTable($pdo, 'books', 'id',
+            \Library\Entity\Book::class, [
+                &$this->publishersTable,
+                &$this->authorsTable,
+                &$this->bookTagTable]
+        );
         $this->publishersTable = new DatabaseTable($pdo, 'publisher', 'id', \Library\Entity\Publisher::class, [&$this->booksTable]);
         $this->authorsTable    = new DatabaseTable($pdo, 'authors', 'id', \Library\Entity\Author::class, [&$this->booksTable]);
         $this->tagsTable       = new DatabaseTable($pdo, 'tags', 'id');
+        $this->bookTagTable    = new DatabaseTable($pdo, 'book_tag', 'book_id');
         $this->usersTable      = new DatabaseTable($pdo, 'users');
         $this->authentication  = new Authentication($this->usersTable, 'email', 'password');
     }
 
 	public function getRoutes(): array
 	{
-        $bookController   = new Book($this->booksTable, $this->authorsTable, $this->publishersTable, $this->authentication);
+        $bookController   = new Book(
+            $this->booksTable,
+            $this->authorsTable,
+            $this->publishersTable,
+            $this->tagsTable,
+            $this->authentication
+        );
         $authorController = new Author($this->authorsTable, $this->authentication);
         $userController   = new Register($this->usersTable);
         $loginController  = new Login($this->authentication);

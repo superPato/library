@@ -15,13 +15,17 @@ class Book
     public $authorid;
     private $publishersTable;
     private $authorsTable;
+    private $bookTagTable;
     private $author;
     private $publisher;
 
-    public function __construct(DatabaseTable $publishersTable, DatabaseTable $authorsTable)
+    public function __construct(DatabaseTable $publishersTable,
+                                DatabaseTable $authorsTable,
+                                DatabaseTable $bookTagTable)
     {
         $this->publishersTable = $publishersTable;
         $this->authorsTable = $authorsTable;
+        $this->bookTagTable = $bookTagTable;
     }
 
     public function getPublisher()
@@ -40,5 +44,10 @@ class Book
         }
 
         return $this->author;
+    }
+
+    public function addTag($tagId)
+    {
+        $this->bookTagTable->save(['book_id' => $this->id, 'tag_id' => $tagId]);
     }
 }

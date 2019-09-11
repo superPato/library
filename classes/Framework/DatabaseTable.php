@@ -66,6 +66,8 @@ class DatabaseTable {
         $sql = "INSERT INTO `{$this->table}` SET {$placeholders}";
 
         $this->query($sql, $fields);
+
+        return $this->pdo->lastInsertId();
     }
 
     private function edit(array $fields)
@@ -78,14 +80,25 @@ class DatabaseTable {
 
     public function save(array $record)
     {
+        $entity = new $this->className(...$this->constructorArgs);
+
         try {
             if ($record[$this->primaryKey] == '') {
                 $record[$this->primaryKey] = null;
             }
-            $this->insert($record);
+
+            $lastId = $this->insert($record);
+            $entity->{$this->primaryKey} = $lastId;
         } catch (\PDOException $e) {
             $this->edit($record);
         }
+
+        foreach ($record as $key => $value) {
+            if (!empty($value))
+                $entity->$key = $value;
+        }
+
+        return $entity;
     }
 
     public function delete($valueId)

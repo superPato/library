@@ -32,5 +32,11 @@
             <?php endforeach ?>
         </select>
     </div>
+    <div>
+        <?php foreach ($tags as $tag): ?>
+        <label for="<?= $tag->name ?>"><?= $tag->name ?></label>
+        <input type="checkbox" name="tags[]" value="<?= $tag->id ?>" id="<?= $tag->name ?>">
+        <?php endforeach; ?>
+    </div>
 	<button type="submit" name="submit">Save</button>
 </form>

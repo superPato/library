@@ -10,15 +10,18 @@ class Book {
     private $publishersTable;
     private $authentication;
     private $authorsTable;
+    private $tagsTable;
 
     public function __construct(DatabaseTable $booksTable,
                                 DatabaseTable $authorsTable,
                                 DatabaseTable $publishersTable,
+                                DatabaseTable $tagsTable,
                                 Authentication $authentication)
     {
         $this->booksTable = $booksTable;
         $this->authorsTable = $authorsTable;
         $this->publishersTable = $publishersTable;
+        $this->tagsTable = $tagsTable;
         $this->authentication = $authentication;
     }
 
@@ -48,7 +51,12 @@ class Book {
     public function saveEdit()
     {
         $book = $_POST['book'];
-        $this->booksTable->save($book);
+
+        $bookEntity = $this->booksTable->save($book);
+
+        foreach ($_POST['tags'] as $tag) {
+            $bookEntity->addTag($tag);
+        }
 
         header('location: /books/list');
     }
@@ -56,6 +64,8 @@ class Book {
     public function edit()
     {
         $title = 'Add book';
+
+        $tags = $this->tagsTable->findAll();
 
         if (isset($_GET['id'])) {
             $title = 'Update book';
@@ -72,6 +82,7 @@ class Book {
                 'book'       => $book ?? null,
                 'publishers' => $publishers,
                 'authors'    => $authors,
+                'tags'       => $tags,
             ]
         ];
     }
