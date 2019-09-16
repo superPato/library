@@ -1,5 +1,13 @@
 <p class="text-right"><?= $totalBooks ?> books has been submitted.</p>
 
+<div class="sidebar">
+    <ul>
+        <?php foreach ($tags as $tag): ?>
+        <li><a href="/books/list?tag=<?= $tag->id ?>"><?= $tag->name ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+
 <?php foreach ($books as $book): ?>
 <p>
 	<?= htmlspecialchars($book->title, ENT_QUOTES, 'UTF-8') ?>

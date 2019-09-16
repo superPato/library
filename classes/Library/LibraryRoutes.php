@@ -33,7 +33,12 @@ class LibraryRoutes implements \Framework\Routes
         );
         $this->publishersTable = new DatabaseTable($pdo, 'publisher', 'id', \Library\Entity\Publisher::class, [&$this->booksTable]);
         $this->authorsTable    = new DatabaseTable($pdo, 'authors', 'id', \Library\Entity\Author::class, [&$this->booksTable]);
-        $this->tagsTable       = new DatabaseTable($pdo, 'tags', 'id');
+        $this->tagsTable       = new DatabaseTable($pdo, 'tags', 'id',
+            \Library\Entity\Tag::class, [
+                $this->booksTable,
+                &$this->bookTagTable,
+            ]
+        );
         $this->bookTagTable    = new DatabaseTable($pdo, 'book_tag', 'book_id');
         $this->usersTable      = new DatabaseTable($pdo, 'users');
         $this->authentication  = new Authentication($this->usersTable, 'email', 'password');

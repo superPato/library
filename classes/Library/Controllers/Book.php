@@ -35,7 +35,15 @@ class Book {
 
     public function list()
     {
-        $books = $this->booksTable->findAll();
+        if (isset($_GET['tag'])) {
+            $tag = $this->tagsTable->findById($_GET['tag']);
+
+            $books = $tag->getBooks();
+        } else {
+            $books = $this->booksTable->findAll();
+        }
+
+        $tags = $this->tagsTable->findAll();
 
         $totalBooks = $this->booksTable->total();
 
@@ -44,7 +52,7 @@ class Book {
         return [
             'title'     => 'List Books',
             'template'  => 'books.html.php',
-            'variables' => compact('books', 'totalBooks', 'isLoggedIn'),
+            'variables' => compact('books', 'tags', 'totalBooks', 'isLoggedIn'),
         ];
     }
 
