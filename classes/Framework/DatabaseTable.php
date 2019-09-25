@@ -108,6 +108,13 @@ class DatabaseTable {
         $this->query("DELETE FROM `{$this->table}` WHERE `{$this->primaryKey}` = :id", $parameters);
     }
 
+    public function deleteWhere($column, $value)
+    {
+        $parameters = [':value' => $value];
+
+        $this->query("DELETE FROM `{$this->table}` WHERE `$column` = :value", $parameters);
+    }
+
     private function getStringPlaceholders($fields)
     {
         $placeholders = '';

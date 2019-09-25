@@ -35,7 +35,13 @@
     <div>
         <?php foreach ($tags as $tag): ?>
         <label for="<?= $tag->name ?>"><?= $tag->name ?></label>
+
+        <?php if ($book && $book->hasTag($tag->id)): ?>
+        <input type="checkbox" name="tags[]" value="<?= $tag->id ?>" id="<?= $tag->name ?>" checked>
+        <?php else: ?>
         <input type="checkbox" name="tags[]" value="<?= $tag->id ?>" id="<?= $tag->name ?>">
+        <?php endif ?>
+
         <?php endforeach; ?>
     </div>
 	<button type="submit" name="submit">Save</button>

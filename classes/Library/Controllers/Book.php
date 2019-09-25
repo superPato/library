@@ -62,6 +62,8 @@ class Book {
 
         $bookEntity = $this->booksTable->save($book);
 
+        $bookEntity->clearTags();
+
         foreach ($_POST['tags'] as $tag) {
             $bookEntity->addTag($tag);
         }

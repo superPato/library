@@ -50,4 +50,20 @@ class Book
     {
         $this->bookTagTable->save(['book_id' => $this->id, 'tag_id' => $tagId]);
     }
+
+    public function hasTag($tagId)
+    {
+        $tags = $this->bookTagTable->find('book_id', $this->id);
+
+        foreach ($tags as $tag) {
+            if ($tag->tag_id == $tagId) {
+                return true;
+            }
+        }
+    }
+
+    public function clearTags()
+    {
+        $this->bookTagTable->deleteWhere('book_id', $this->id);
+    }
 }
